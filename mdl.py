@@ -8,7 +8,7 @@ from sklearn.model_selection   import   train_test_split
 from sklearn.model_selection   import   cross_val_score
 from sklearn.model_selection   import   GridSearchCV
 from sklearn.metrics           import   mean_squared_error
-from sklearn.metrics           import r2_score
+from sklearn.metrics           import   r2_score
 from sklearn.ensemble          import   RandomForestRegressor
 from sklearn.ensemble          import   ExtraTreesRegressor
 import xgboost as xgb
@@ -58,7 +58,7 @@ st.write("Bonjour, Nous présentons notre modélisation.")
 
 st.write("Bonjour, Nous présentons notre modélisation, voici les \
           premières lignes de notre jeu de données")
-df = pd.read_csv('Emissions_CO2_FR.csv',  low_memory=False)
+df = pd.read_csv('../data/Emissions_CO2_FR.csv',  low_memory=False)
 df = df.sample(5000)
 df = df[df.Emetteur_CO2 == 1]
 st.dataframe(df.head(10))

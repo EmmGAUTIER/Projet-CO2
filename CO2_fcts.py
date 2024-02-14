@@ -90,7 +90,7 @@ libelles_vars = {
 'Larg_essieu_aut'          :  'Largeur autre essieu (mm)',
 'Type_carburant'           :  'Carburant',
 'Mode_carburant'           :  'Mode de carburant',
-'Capac_moteur'             :  'Cylindrée',
+'Cylindree'                :  'Cylindrée (cm3)',
 'Puiss_moteur'             :  'Puissance (KW)',
 'Conso_energie_elect'      :  'Consommation électrique (Wh/km)',
 'Techno_innov'             :  'Technologie innovante',

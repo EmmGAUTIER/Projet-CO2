@@ -84,7 +84,7 @@ libelles_vars = {
 'Cat_vehicule'             :  'Catégorie de véhicule',
 'Total_nvle_inscr'         :  'Total nouvelle inscription',
 'Emission_CO2'             :  'Émission de CO2 (g/km)',
-'Masse'                    :  'Masse',
+'Masse'                    :  'Masse (kg)',
 'Empattement'              :  'Empattement (mm)',
 'Larg_essieu_dir'          :  'Largeur essieu directeur (mm)',
 'Larg_essieu_aut'          :  'Largeur autre essieu (mm)',

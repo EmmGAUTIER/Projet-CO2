@@ -1,0 +1,702 @@
+
+Nombre de lignes   :  30427
+Nombre de colonnes :     38
+
+Colonne                    type            Nulls
+                                      Nombre    proportion
+Marque                     object          0       0.000
+Nom_fab                    object          0       0.000
+Numero_approb_type         object          0       0.000
+Type                       object          0       0.000
+Variante                   object          1       0.003
+Version                    object          5       0.016
+Nom_commercial             object          0       0.000
+Cat_vehicule               object          0       0.000
+Total_nvle_inscr           int64           0       0.000
+Emis_CO2_spe               float64         0       0.000
+Masse                      float64         0       0.000
+Empattement                float64         0       0.000
+Larg_essieu_dir            float64         0       0.000
+Larg_essieu_aut            float64      1828       6.008
+Type_carburant             object          0       0.000
+Mode_carburant             object          0       0.000
+Cylindree                  float64        80       0.263
+Puiss_moteur               float64         0       0.000
+Conso_elect                float64     30344      99.727
+Nap_etat                   object          0       0.000
+Nap_norme                  object          0       0.000
+Nap_n1                     int64           0       0.000
+Nap_n2                     int64           0       0.000
+Classe_CO2                 object          0       0.000
+Carburant_Diesel           bool            0       0.000
+Carburant_Diesel-Electrique  bool            0       0.000
+Carburant_E85              bool            0       0.000
+Carburant_Electrique       bool            0       0.000
+Carburant_Essence          bool            0       0.000
+Carburant_Essence-Electrique  bool            0       0.000
+Carburant_Hydrogene        bool            0       0.000
+Carburant_LPG              bool            0       0.000
+Carburant_NG-Biomethane    bool            0       0.000
+Mode_carb_B                bool            0       0.000
+Mode_carb_F                bool            0       0.000
+Mode_carb_M                bool            0       0.000
+Hybride                    int64           0       0.000
+Emetteur_CO2               int64           0       0.000
+
+==============================================================================================================
+
+>>>> 'Marque' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs différentes : 51
+
+VOLKSWAGEN          :   3196 
+DAIMLER AG          :   2830 
+OPEL                :   2705 
+AUDI AG             :   2587 
+BMW AG              :   2326 
+RENAULT             :   1988 
+FIAT GROUP          :   1785 
+NISSAN              :   1610 
+AUTOMOBILES PEUGEOT :   1462 
+AUTOMOBILES CITROEN :   1306 
+...
+Nulls               :      0 
+
+
+==============================================================================================================
+
+>>>> 'Nom_fab' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs différentes : 51
+
+VOLKSWAGEN AG               :   3196 
+DAIMLER AG                  :   2830 
+ADAM OPEL AG                :   2705 
+AUDI AG                     :   2587 
+BAYERISCHE MOTOREN WERKE AG :   2326 
+RENAULT SAS                 :   1988 
+FIAT GROUP AUTOMOBILES SPA  :   1787 
+NISSAN INTERNATIONAL SA     :   1610 
+AUTOMOBILES PEUGEOT         :   1462 
+AUTOMOBILES CITROEN         :   1306 
+...
+Nulls                       :      0 
+
+
+==============================================================================================================
+
+>>>> 'Numero_approb_type' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs différentes : 105
+
+e1*2001/116*0430*26  :    255 
+e1*2001/116*0430*28  :    248 
+e3*2007/46*0064*04   :    244 
+e4*2007/46*0204*12   :    226 
+e1*2001/116*0379*23  :    188 
+e1*2001/116*0379*22  :    165 
+e1*2007/46*0374*09   :    146 
+e1*2001/116*0430*29  :    140 
+e3*2001/116*0217*24  :    140 
+e11*2001/116*0295*25 :    140 
+...
+Nulls                :      0 
+
+
+==============================================================================================================
+
+>>>> 'Type' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs différentes : 155
+
+B8     :   1095 
+J10    :    709 
+P-J/SW :    702 
+S-D    :    672 
+312    :    667 
+Z      :    605 
+S      :    577 
+SD     :    552 
+AU     :    513 
+204    :    510 
+...
+Nulls  :      0 
+
+
+==============================================================================================================
+
+>>>> 'Variante' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       1  soit  0.003%
+
+Nombre de valeurs différentes : 92
+
+A          :    509 
+C          :    312 
+D          :    189 
+B          :    139 
+C9HP       :    134 
+N          :    118 
+ACCFFBX1   :    114 
+K          :    114 
+ACCFFBX0   :    113 
+NLP13F(MH) :    110 
+...
+Nulls      :      1 
+
+
+==============================================================================================================
+
+>>>> 'Version' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       5  soit  0.016%
+
+Nombre de valeurs différentes : 91
+
+8      :    489 
+0      :    340 
+0/1    :    325 
+A      :    193 
+8/PS   :    159 
+4      :    156 
+8/1    :    155 
+5A000  :    154 
+A02    :    137 
+5B     :    136 
+...
+Nulls  :      5 
+
+
+==============================================================================================================
+
+>>>> 'Nom_commercial' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs différentes : 156
+
+GOLF     :    784 
+CLASSE C :    726 
+CLASSE E :    598 
+MEGANE   :    591 
+CORSA    :    539 
+INSIGNIA :    484 
+QASHQAI  :    438 
+JUKE     :    417 
+MINI     :    389 
+YARIS    :    382 
+...
+Nulls    :      0 
+
+
+==============================================================================================================
+
+>>>> 'Cat_vehicule' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs différentes : 2
+
+M1     :  30248 
+M1G    :    179 
+...
+Nulls  :      0 
+
+
+==============================================================================================================
+
+>>>> 'Total_nvle_inscr' <<<<   : 
+
+Type           :  int64
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs uniques  :  1069
+Nombre de valeurs répétées :  29358
+
+
+==============================================================================================================
+
+>>>> 'Emis_CO2_spe' <<<<   : 
+
+Type           :  float64
+Valeurs nulles :       0  soit  0.000%
+
+count    30427.000000
+mean       138.116377
+std         34.287582
+min          0.000000
+25%        117.000000
+50%        134.000000
+75%        151.000000
+max        398.000000
+Name: Emis_CO2_spe, dtype: float64
+
+
+==============================================================================================================
+
+>>>> 'Masse' <<<<   : 
+
+Type           :  float64
+Valeurs nulles :       0  soit  0.000%
+
+count    30427.000000
+mean      1515.052256
+std        299.085446
+min        650.000000
+25%       1290.000000
+50%       1504.000000
+75%       1685.000000
+max       2842.000000
+Name: Masse, dtype: float64
+
+
+==============================================================================================================
+
+>>>> 'Empattement' <<<<   : 
+
+Type           :  float64
+Valeurs nulles :       0  soit  0.000%
+
+count    30427.000000
+mean      2679.599895
+std        188.948204
+min       1867.000000
+25%       2575.000000
+50%       2673.000000
+75%       2765.000000
+max       4325.000000
+Name: Empattement, dtype: float64
+
+
+==============================================================================================================
+
+>>>> 'Larg_essieu_dir' <<<<   : 
+
+Type           :  float64
+Valeurs nulles :       0  soit  0.000%
+
+count    30427.000000
+mean      1540.562757
+std         62.174795
+min       1283.000000
+25%       1507.000000
+50%       1541.000000
+75%       1577.000000
+max       1810.000000
+Name: Larg_essieu_dir, dtype: float64
+
+
+==============================================================================================================
+
+>>>> 'Larg_essieu_aut' <<<<   : 
+
+Type           :  float64
+Valeurs nulles :    1828  soit  6.008%
+
+count    28599.000000
+mean      1538.537851
+std         63.944872
+min       1270.000000
+25%       1502.000000
+50%       1545.000000
+75%       1571.000000
+max       1790.000000
+Name: Larg_essieu_aut, dtype: float64
+
+
+==============================================================================================================
+
+>>>> 'Type_carburant' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs différentes : 9
+
+Diesel             :  19788 
+Essence            :  10402 
+Electrique         :     83 
+LPG                :     65 
+E85                :     39 
+NG-Biomethane      :     28 
+Essence-Electrique :     16 
+Diesel-Electrique  :      5 
+Hydrogene          :      1 
+...
+Nulls              :      0 
+
+
+==============================================================================================================
+
+>>>> 'Mode_carburant' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs différentes : 3
+
+M      :  30307 
+B      :     81 
+F      :     39 
+...
+Nulls  :      0 
+
+
+==============================================================================================================
+
+>>>> 'Cylindree' <<<<   : 
+
+Type           :  float64
+Valeurs nulles :      80  soit  0.263%
+
+count    30347.000000
+mean      1856.671895
+std        664.811761
+min          0.000000
+25%       1461.000000
+50%       1685.000000
+75%       1995.000000
+max       7011.000000
+Name: Cylindree, dtype: float64
+
+
+==============================================================================================================
+
+>>>> 'Puiss_moteur' <<<<   : 
+
+Type           :  float64
+Valeurs nulles :       0  soit  0.000%
+
+count    30427.000000
+mean       108.449880
+std         53.230704
+min         10.000000
+25%         77.000000
+50%         96.000000
+75%        125.000000
+max        585.000000
+Name: Puiss_moteur, dtype: float64
+
+
+==============================================================================================================
+
+>>>> 'Conso_elect' <<<<   : 
+
+Type           :  float64
+Valeurs nulles :   30344  soit 99.727%
+
+count     83.000000
+mean     147.265060
+std       34.380966
+min       52.000000
+25%      125.000000
+50%      151.000000
+75%      173.000000
+max      231.000000
+Name: Conso_elect, dtype: float64
+
+
+==============================================================================================================
+
+>>>> 'Nap_etat' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs différentes : 9
+
+e1     :  13100 
+e2     :   5235 
+e11    :   4747 
+e4     :   2645 
+e3     :   1927 
+e13    :   1301 
+e9     :   1220 
+e6     :    248 
+e24    :      4 
+...
+Nulls  :      0 
+
+
+==============================================================================================================
+
+>>>> 'Nap_norme' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs différentes : 5
+
+2007/46  :  15146 
+2001/116 :  14889 
+98/14    :    213 
+KS07/46  :    162 
+96/79    :     17 
+...
+Nulls    :      0 
+
+
+==============================================================================================================
+
+>>>> 'Nap_n1' <<<<   : 
+
+Type           :  int64
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs uniques  :  357
+Nombre de valeurs répétées :  30070
+
+
+==============================================================================================================
+
+>>>> 'Nap_n2' <<<<   : 
+
+Type           :  int64
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs uniques  :  73
+Nombre de valeurs répétées :  30354
+
+
+==============================================================================================================
+
+>>>> 'Classe_CO2' <<<<   : 
+
+Type           :  object
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs différentes : 7
+
+C      :   9493 
+B      :   7475 
+D      :   5983 
+E      :   4034 
+A      :   2125 
+F      :    930 
+G      :    387 
+...
+Nulls  :      0 
+
+
+==============================================================================================================
+
+>>>> 'Carburant_Diesel' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 19788
+   False             : 10639
+
+
+==============================================================================================================
+
+>>>> 'Carburant_Diesel-Electrique' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 5
+   False             : 30422
+
+
+==============================================================================================================
+
+>>>> 'Carburant_E85' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 39
+   False             : 30388
+
+
+==============================================================================================================
+
+>>>> 'Carburant_Electrique' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 83
+   False             : 30344
+
+
+==============================================================================================================
+
+>>>> 'Carburant_Essence' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 10402
+   False             : 20025
+
+
+==============================================================================================================
+
+>>>> 'Carburant_Essence-Electrique' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 16
+   False             : 30411
+
+
+==============================================================================================================
+
+>>>> 'Carburant_Hydrogene' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 1
+   False             : 30426
+
+
+==============================================================================================================
+
+>>>> 'Carburant_LPG' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 65
+   False             : 30362
+
+
+==============================================================================================================
+
+>>>> 'Carburant_NG-Biomethane' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 28
+   False             : 30399
+
+
+==============================================================================================================
+
+>>>> 'Mode_carb_B' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 81
+   False             : 30346
+
+
+==============================================================================================================
+
+>>>> 'Mode_carb_F' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 39
+   False             : 30388
+
+
+==============================================================================================================
+
+>>>> 'Mode_carb_M' <<<<   : 
+
+Type           :  bool
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs :
+   True              : 30307
+   False             : 120
+
+
+==============================================================================================================
+
+>>>> 'Hybride' <<<<   : 
+
+Type           :  int64
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs uniques  :  2
+Nombre de valeurs répétées :  30425
+
+
+==============================================================================================================
+
+>>>> 'Emetteur_CO2' <<<<   : 
+
+Type           :  int64
+Valeurs nulles :       0  soit  0.000%
+
+Nombre de valeurs uniques  :  2
+Nombre de valeurs répétées :  30425
+
+
+Doublons
+Nombre de lignes dupliquées :  0
+Sans la colonne : Marque  il y a :  0 lignes duppliquées.
+Sans la colonne : Nom_fab  il y a :  0 lignes duppliquées.
+Sans la colonne : Numero_approb_type  il y a :  0 lignes duppliquées.
+Sans la colonne : Type  il y a :  0 lignes duppliquées.
+Sans la colonne : Variante  il y a :  29 lignes duppliquées.
+Sans la colonne : Version  il y a :  559 lignes duppliquées.
+Sans la colonne : Nom_commercial  il y a :  0 lignes duppliquées.
+Sans la colonne : Cat_vehicule  il y a :  0 lignes duppliquées.
+Sans la colonne : Total_nvle_inscr  il y a :  1604 lignes duppliquées.
+Sans la colonne : Emis_CO2_spe  il y a :  0 lignes duppliquées.
+Sans la colonne : Masse  il y a :  627 lignes duppliquées.
+Sans la colonne : Empattement  il y a :  0 lignes duppliquées.
+Sans la colonne : Larg_essieu_dir  il y a :  3 lignes duppliquées.
+Sans la colonne : Larg_essieu_aut  il y a :  3 lignes duppliquées.
+Sans la colonne : Type_carburant  il y a :  0 lignes duppliquées.
+Sans la colonne : Mode_carburant  il y a :  0 lignes duppliquées.
+Sans la colonne : Cylindree  il y a :  0 lignes duppliquées.
+Sans la colonne : Puiss_moteur  il y a :  0 lignes duppliquées.
+Sans la colonne : Conso_elect  il y a :  0 lignes duppliquées.
+Sans la colonne : Nap_etat  il y a :  0 lignes duppliquées.
+Sans la colonne : Nap_norme  il y a :  0 lignes duppliquées.
+Sans la colonne : Nap_n1  il y a :  0 lignes duppliquées.
+Sans la colonne : Nap_n2  il y a :  0 lignes duppliquées.
+Sans la colonne : Classe_CO2  il y a :  0 lignes duppliquées.
+Sans la colonne : Carburant_Diesel  il y a :  0 lignes duppliquées.
+Sans la colonne : Carburant_Diesel-Electrique  il y a :  0 lignes duppliquées.
+Sans la colonne : Carburant_E85  il y a :  0 lignes duppliquées.
+Sans la colonne : Carburant_Electrique  il y a :  0 lignes duppliquées.
+Sans la colonne : Carburant_Essence  il y a :  0 lignes duppliquées.
+Sans la colonne : Carburant_Essence-Electrique  il y a :  0 lignes duppliquées.
+Sans la colonne : Carburant_Hydrogene  il y a :  0 lignes duppliquées.
+Sans la colonne : Carburant_LPG  il y a :  0 lignes duppliquées.
+Sans la colonne : Carburant_NG-Biomethane  il y a :  0 lignes duppliquées.
+Sans la colonne : Mode_carb_B  il y a :  0 lignes duppliquées.
+Sans la colonne : Mode_carb_F  il y a :  0 lignes duppliquées.
+Sans la colonne : Mode_carb_M  il y a :  0 lignes duppliquées.
+Sans la colonne : Hybride  il y a :  0 lignes duppliquées.
+Sans la colonne : Emetteur_CO2  il y a :  0 lignes duppliquées.

@@ -10,10 +10,11 @@ def st_visualisation(df) :
     st.header("Visualisation des données")
     #st.text(df.corr())
 
-    fig = plt.figure(figsize=(4, 4))
-    sns.heatmap(df[aux.vars_quant].corr(), annot = True)
-    plt.title ("Corrélation entre variables quantatives")
-    st.pyplot(fig)
+    # TODO : À corriger provoque une erreur sur stremlit.io
+    #fig = plt.figure(figsize=(4, 4))
+    #sns.heatmap(df[aux.vars_quant].corr(), annot = True)
+    #plt.title ("Corrélation entre variables quantatives")
+    #st.pyplot(fig)
 
     var_quant_choisie = st.selectbox("Variable explicative quantitative", aux.vars_quant)
 

@@ -1,0 +1,123 @@
+{
+    "Modèles": [
+        {
+            "Nom": "BaggingClassifier",
+            "Libellé": "Bagging Classifier",
+            "Classe": "sklearn.neighbors.BaggingClassifier",
+            "Prm_fixes": {},
+            "Prm_essai": {},
+            "fit_time": "0.9019298553466797",
+            "cla_report": "              precision    recall  f1-score   support\n\n           A       0.53      0.51      0.52        53\n           B       0.68      0.64      0.66       197\n           C       0.63      0.73      0.68       275\n           D       0.64      0.58      0.61       238\n           E       0.73      0.70      0.72       175\n           F       0.69      0.70      0.70        44\n           G       0.74      0.78      0.76        18\n\n    accuracy                           0.66      1000\n   macro avg       0.66      0.66      0.66      1000\nweighted avg       0.66      0.66      0.66      1000\n",
+            "Prm_best": {}
+        },
+        {
+            "Nom": "ExtraTreesClassifier",
+            "Libellé": "Extra Trees Classifier",
+            "Classe": "sklearn.ensemble.ExtraTreesClassifier",
+            "Prm_fixes": {},
+            "Prm_essai": {},
+            "fit_time": "2.7597849369049072",
+            "cla_report": "              precision    recall  f1-score   support\n\n           A       0.59      0.49      0.54        53\n           B       0.72      0.62      0.67       197\n           C       0.65      0.74      0.70       275\n           D       0.63      0.60      0.61       238\n           E       0.73      0.75      0.74       175\n           F       0.67      0.80      0.73        44\n           G       0.88      0.78      0.82        18\n\n    accuracy                           0.68      1000\n   macro avg       0.70      0.68      0.69      1000\nweighted avg       0.68      0.68      0.67      1000\n",
+            "Prm_best": {}
+        },
+        {
+            "Nom": "KNeighborsClassifier",
+            "Libellé": "Plus proches voisins",
+            "Classe": "sklearn.neighbors.KNeighborsClassifier",
+            "Prm_fixes": {
+                "n_neighbors": 3
+            },
+            "Prm_essai": {
+                "n_neighbors": [
+                    2,
+                    3,
+                    5,
+                    8
+                ],
+                "metric": [
+                    "minkowski",
+                    "manhattan",
+                    "chebyshev"
+                ]
+            },
+            "fit_time": "5.319735527038574",
+            "cla_report": "              precision    recall  f1-score   support\n\n           A       0.44      0.57      0.50        53\n           B       0.63      0.67      0.65       197\n           C       0.61      0.66      0.63       275\n           D       0.63      0.54      0.58       238\n           E       0.71      0.62      0.66       175\n           F       0.62      0.70      0.66        44\n           G       0.72      0.72      0.72        18\n\n    accuracy                           0.62      1000\n   macro avg       0.62      0.64      0.63      1000\nweighted avg       0.63      0.62      0.62      1000\n",
+            "Prm_best": {
+                "metric": "manhattan",
+                "n_neighbors": 3
+            }
+        },
+        {
+            "Nom": "RandomForestClassifier",
+            "Libellé": "Forêt aléatoire",
+            "Classe": "sklearn.neighbors.RandomForestClassifier",
+            "Prm_fixes": {},
+            "Prm_essai": {
+                "n_estimators": [
+                    50,
+                    100,
+                    200
+                ],
+                "max_depth": [
+                    3,
+                    5,
+                    10,
+                    20,
+                    40
+                ]
+            },
+            "fit_time": "36.988813638687134",
+            "cla_report": "              precision    recall  f1-score   support\n\n           A       0.67      0.49      0.57        53\n           B       0.73      0.66      0.70       197\n           C       0.65      0.75      0.70       275\n           D       0.65      0.59      0.62       238\n           E       0.73      0.75      0.74       175\n           F       0.67      0.82      0.73        44\n           G       1.00      0.78      0.88        18\n\n    accuracy                           0.69      1000\n   macro avg       0.73      0.69      0.70      1000\nweighted avg       0.69      0.69      0.68      1000\n",
+            "Prm_best": {
+                "max_depth": 40,
+                "n_estimators": 200
+            }
+        },
+        {
+            "Nom": "GradientBoostingClassifier",
+            "Libellé": "Gradient Boosting Classifier",
+            "Classe": "sklearn.neighbors.GradientBoostingClassifier",
+            "Prm_fixes": {
+                "random_state": 421
+            },
+            "Prm_essai": {
+                "max_features": [
+                    0.4,
+                    0.6,
+                    0.8,
+                    0.9
+                ]
+            },
+            "fit_time": "58.78729295730591",
+            "cla_report": "              precision    recall  f1-score   support\n\n           A       0.67      0.34      0.45        53\n           B       0.68      0.70      0.69       197\n           C       0.60      0.75      0.67       275\n           D       0.64      0.49      0.55       238\n           E       0.68      0.68      0.68       175\n           F       0.64      0.73      0.68        44\n           G       0.75      0.83      0.79        18\n\n    accuracy                           0.64      1000\n   macro avg       0.67      0.65      0.64      1000\nweighted avg       0.65      0.64      0.64      1000\n",
+            "Prm_best": {
+                "max_features": 0.4
+            }
+        },
+        {
+            "Nom": "HistGradientBoostingClassifier",
+            "Libellé": "Hist Gradient Boosting Classifier",
+            "Classe": "sklearn.neighbors.HistGradientBoostingClassifier",
+            "Prm_fixes": {
+                "random_state": 421
+            },
+            "Prm_essai": {
+                "min_samples_leaf": [
+                    3,
+                    4,
+                    5,
+                    7,
+                    10,
+                    14,
+                    20,
+                    28
+                ]
+            },
+            "fit_time": "173.40739035606384",
+            "cla_report": "              precision    recall  f1-score   support\n\n           A       0.69      0.51      0.59        53\n           B       0.73      0.70      0.72       197\n           C       0.67      0.75      0.71       275\n           D       0.65      0.60      0.62       238\n           E       0.73      0.75      0.74       175\n           F       0.67      0.75      0.71        44\n           G       0.88      0.78      0.82        18\n\n    accuracy                           0.69      1000\n   macro avg       0.72      0.69      0.70      1000\nweighted avg       0.69      0.69      0.69      1000\n",
+            "Prm_best": {
+                "min_samples_leaf": 10
+            }
+        }
+    ]
+}

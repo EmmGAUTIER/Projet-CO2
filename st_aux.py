@@ -13,6 +13,14 @@ def split_ap_type(at):
     l[0] = l[0].lower()
     return l
 
+vars_quant = ['Masse',
+              'Empattement',
+              'Larg_essieu_dir',
+              'Cylindree',
+              'Puiss_moteur',
+              'Type_carburant',
+              'Emis_CO2_spe']
+
 dict_renommages_cols = {
               'id'           : 'Id',
               'MS'           : 'Etat_mem',

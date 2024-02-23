@@ -20,10 +20,10 @@ import json
 
 #----- Autres feuilles et fichier auxiliaires -----
 #from st_aux                    import 
-#from st_view                   import st_view
+from st_visualisation           import st_visualisation
 from st_presentation            import st_presentation
-from st_regressions             import st_regressions
-#from st_classifications        import st_classifications
+from st_regression              import st_regression
+from st_classification          import st_classification
 
 ###########################################################################
 # Chargement de données                                                   #
@@ -38,7 +38,7 @@ df = df[df.Emetteur_CO2 == 1]
 # Présentation du menu principal avec un sidebar
 st.sidebar.title("Sommaire")
 pages = ["Présentation du projet",
-         "Données et méthodologie",
+         #"Données et méthodologie",
          "Visualisations",
          "Régressions",
          "Classifications"]#,
@@ -47,17 +47,17 @@ pages = ["Présentation du projet",
 page = st.sidebar.radio("", pages)
 
 if page == "Présentation du projet" :
-    st_presentation()
+    st_presentation(df)
     pass
 
 if page == "Visualisations" :
-    #st_view()
+    st_visualisation(df)
     pass
 
 if page == "Régressions" :
-    st_regressions(df)
+    st_regression(df)
     pass
 
 if page == "Classifications" :
-    #st_classifications()
+    st_classification(df)
     pass

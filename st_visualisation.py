@@ -16,6 +16,7 @@ def st_visualisation(df) :
     #plt.title ("Corrélation entre variables quantatives")
     #st.pyplot(fig)
 
+    st.write ("Lien entre la cible et chaqune des variables quantitatives et explicatives")
     var_quant_choisie = st.selectbox("Variable explicative quantitative", aux.vars_quant)
 
     fig = plt.figure(figsize=(4, 4))

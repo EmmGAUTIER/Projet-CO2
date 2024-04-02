@@ -11,19 +11,18 @@ import streamlit         as st
 import pandas            as pd
 import numpy             as np
 
-import time
-import json
-
 ###########################################################################
 # Import des librairies
 ###########################################################################
 
 #----- Autres feuilles et fichier auxiliaires -----
-#from st_aux                    import 
-from st_visualisation           import st_visualisation
-from st_presentation            import st_presentation
-from st_regression              import st_regression
-from st_classification          import st_classification
+from st_aux              import vars_quant        # Liste des var. quant.
+from st_aux              import libelles_vars     # libellés pour graphes
+from st_jeudonnees       import st_jeudonnees
+from st_visualisation    import st_visualisation
+from st_presentation     import st_presentation
+from st_regression       import st_regression
+from st_classification   import st_classification
 
 ###########################################################################
 # Chargement de données                                                   #
@@ -38,7 +37,7 @@ df = df[df.Emetteur_CO2 == 1]
 # Présentation du menu principal avec un sidebar
 st.sidebar.title("Sommaire")
 pages = ["Présentation du projet",
-         #"Données et méthodologie",
+         "Le jeu de données",
          "Visualisations",
          "Régressions",
          "Classifications"]#,
@@ -46,8 +45,15 @@ pages = ["Présentation du projet",
 
 page = st.sidebar.radio("", pages)
 
+st.sidebar.page_link("https://www.linkedin.com/in/emmanuel-gautier-098460105", label = ":blue[Emmanuel Gautier]")
+st.sidebar.page_link("https://github.com/EmmGAUTIER/Projet-CO2", label = ":blue[Sources (github)]")
+
 if page == "Présentation du projet" :
     st_presentation(df)
+    pass
+
+if page == "Le jeu de données" :
+    st_jeudonnees(df)
     pass
 
 if page == "Visualisations" :

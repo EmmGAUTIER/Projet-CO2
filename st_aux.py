@@ -13,13 +13,20 @@ def split_ap_type(at):
     l[0] = l[0].lower()
     return l
 
-vars_quant = ['Masse',
-              'Empattement',
-              'Larg_essieu_dir',
-              'Cylindree',
-              'Puiss_moteur',
-              'Type_carburant',
-              'Emis_CO2_spe']
+# Variables quantitatives (variable cible comprise)
+vars_quant = ['Masse',             # explicative
+              'Empattement',       # explicative
+              'Larg_essieu_dir',   # explicative
+              'Cylindree',         # explicative
+              'Puiss_moteur',      # explicative
+              'Emis_CO2_spe']      # cible
+
+# Variables explicatives quantitatives
+vars_expl_quant = ['Masse',
+                   'Empattement',
+                   'Larg_essieu_dir',
+                   'Cylindree',
+                   'Puiss_moteur']
 
 dict_renommages_cols = {
               'id'           : 'Id',

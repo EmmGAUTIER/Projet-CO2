@@ -4,9 +4,17 @@
 Cette feuille permet d'essayer des modèles de régression.
 
 Elle propose et affiche les choix suivants :
-  - Type de régressions : linéaire et Extra Trees Regression ;
-  - Type de carburant : tous, diesel eu essence
-  - La norme : "2007/46" et "2001/116"
+ linéaire" :
+            reg = linr
+        elif reg_choisie == "Extra Trees Regressor" :
+            reg = extr
+        elif reg_choisie == "Random Forest Regressor" :
+            reg = rmfr
+        else : # "XG Boost"
+
+  - Type de régressions : linéaire, Extra Trees , Forêt aléatoire et XGBoost ;
+  - Type de carburant : tous, diesel eu essence ;
+  - La norme : "2007/46" et "2001/116" ;
 
 Elle calcule :
     - la régression demandée avec les données choisies ;
@@ -14,7 +22,7 @@ Elle calcule :
 
 Elle affiche :
     - Les choix proposés
-    - un nuage de points illustrant les dispertions de prédictoins ;
+    - un nuage de points illustrant les dispertions de prédictions ;
     - La prédiction pour un véhicule avec des métriques.
 
 Les types de carburant et les normes proposés sont restreintes 
@@ -26,6 +34,8 @@ suffisement d'observation pour faire des régressions.
 #  Imports de librairies                                                      #
 ###############################################################################
 
+import sys
+
 #----- Affichage et interaction -----
 import streamlit         as st
 import matplotlib.pyplot as plt
@@ -36,41 +46,48 @@ import pandas as pd
 #----- préparation de données ----- 
 from sklearn.model_selection   import train_test_split
 
-#----- Modèles de régression -----
+#----- Modèles de régression et métriques -----
 from sklearn.linear_model      import LinearRegression
-from sklearn.ensemble          import ExtraTreesRegressor
-
-#----- Métriques -----
+from sklearn.ensemble          import RandomForestRegressor, ExtraTreesRegressor
+from sklearn.metrics           import r2_score
+from xgboost                   import XGBRegressor
 
 #----- Auxiliaires (libellés,...) -----
 from st_aux                    import libelles_vars
 
-
 def st_regression(df) :
 
     st.title("Régressions linéaires")
-    st.write ("Les régressions sont simples à mettre en œuvre et rapides à calculer."
-              "Elles nécessitent peu de temps de calcul. Elles sont de plus "
-              "adaptées à la prédiction de variables quantitatives."
-              "Elles mettent en évidence les effets de l'augmentation des "
-              "valeurs des variables explicatives et les graphiques le montrent.")
+    st.write ("Les régressions sont adaptées "
+              "à la prédiction de variables quantitatives. "
+              "Les régressions linéaires sont, de plus, "
+              " simples et rapides à calculer. "
+              "Les régressions mettent en évidence les effets de l'augmentation des "
+              "valeurs des variables explicatives sur les émissions de CO2.")
+    
+    st.write ("La régression linéaire montre ici ses faiblesses, "
+              "les autres régressions prédisent nettement mieux. ")
+    
+    st.write("Les variables explicatives suivantes sont utilisées : "
+             "masse, empattement, largeur d'essieu, cylindrée "
+             "et puissance du moteur."
+             "Le type de carburant et la norme d'approbation sont "
+             "des variable qualitatives et ne peuvent être utilisé "
+             "par les régressions; le type de carburant et, "
+             "dans une moindre mesure, la norme d'approbation "
+             "ont cepandant un impact sur l'émission de CO2. ")
+
+    st.write("Les modèles de régression sont alors entraînés "
+             "avec tous les modèles de véhicules ou sur une restriction "
+             "à un type de carburant ou une norme. "
+             "La restriction à un type de carburant améliore alors les scores.")
+
+    st.write("Les scores montrent encore un surapprentissage trop important.")
 
     ###############################################################################
-    #  Lecture du fichier de données, quelques initialisation                     #
+    #  Initialisations                                                            #
     ###############################################################################
 
-    # Lecture du fichier prélablement préparé
-    # df = pd.read_csv('Emissions_CO2_FR.csv',  low_memory=False)
-
-    # Sélection des seuls émetteurs de CO2 (modèles élec. et à H exclus)
-    # df = df[df.Emetteur_CO2 == 1]
-
-    # Sélection des seules variables utilisées pour nos régressions.
-    # Les variables quantitatives sont utilisées par les modèles.
-    # Les variables qualitatives servent à sélectionner les données
-    # Ce sont le type d'énergie et la norme.
-    # Ces données comportent beaucoup de valeurs dupliquées, nous
-    # supprimons des données dupliquées.
     used_vars = ['Masse',
                  'Empattement',
                  'Larg_essieu_dir',
@@ -91,13 +108,15 @@ def st_regression(df) :
     
     target_var = 'Emis_CO2_spe'
 
-    #dfs = 
-
     # Création des régresseurs
-    lr  = LinearRegression()
-    etr = ExtraTreesRegressor()
+    linr = LinearRegression()
+    extr = ExtraTreesRegressor()
+    rmfr = RandomForestRegressor()
+    xgbr = XGBRegressor()
 
     # Types de carburant proposés
+    # Les carburant Diesel et Essence sont largement prépondérants
+    # Nous proposons tous les types ou ces deux types de carburant.
     chx_carb = ["Tous", "Essence", "Diesel"]
 
     # Choix de la norme.
@@ -105,7 +124,7 @@ def st_regression(df) :
     # Nous proposons toutes ou chacune de deux plus fréquentes.
     chx_norme = ["Toutes", "2007/46", "2001/116"]
 
-    chx_reg = ["Régression linéaire", "Extra Trees Regressor"]
+    chx_reg = ["Régression linéaire", "Extra Trees Regressor", "Random Forest Regressor", "XG Boost"]
 
     ###############################################################################
     #  Affichage des choix de graphiques                                          #
@@ -125,44 +144,57 @@ def st_regression(df) :
     #  Sélection des données, calculs et affichage                                #
     ###############################################################################
 
-    # Sélection des observation : type de carburant et norme
-    if carb_choisi != "Tous" :
-        dfs = dfs[dfs.Type_carburant == carb_choisi]
-    if norme_choisie != "Toutes" :
-        dfs = dfs[dfs.Nap_norme == norme_choisie]
+    # TODO : utiliser un décorateur pour éviter de recalculer
+    if True :
 
-    # Séparation des variables explicatives et de la variable cible
-    data   = dfs[data_vars]
-    target = dfs[target_var]
+        # Sélection des observation : type de carburant et norme
+        if carb_choisi != "Tous" :
+            dfs = dfs[dfs.Type_carburant == carb_choisi]
+        if norme_choisie != "Toutes" :
+            dfs = dfs[dfs.Nap_norme == norme_choisie]
 
-    # Création d'un jeu d'entraînement et d'un jeu de tests
-    X_train, X_test, y_train, y_test = train_test_split (data, target, test_size = 0.2, random_state = 421)
+        # Séparation des variables explicatives et de la variable cible
+        data   = dfs[data_vars]
+        target = dfs[target_var]
 
-    # Calcul de la régression 
-    reg = lr if reg_choisie == "Régression linéaire" else etr
-    reg.fit(X_train, y_train)
-    y_pred = reg.predict(X_test)
+        # Création d'un jeu d'entraînement et d'un jeu de tests
+        X_train, X_test, y_train, y_test = train_test_split (data, target, test_size = 0.2, random_state = 421)
 
+        # Calcul de la régression 
+        if reg_choisie == "Régression linéaire" :
+            reg = linr
+        elif reg_choisie == "Extra Trees Regressor" :
+            reg = extr
+        elif reg_choisie == "Random Forest Regressor" :
+            reg = rmfr
+        else : # "XG Boost"
+            reg = xgbr
+
+        print ("Entraînement", file = sys.stderr)
+        reg.fit(X_train, y_train)
+        y_pred = reg.predict(X_test)
+
+        #prec_carb_choisi   = carb_choisi
+        #prec_norme_choisie = norme_choisie
+        #prec_chx_reg   = reg_choisie
+
+    print ("Affichage du nuage de points")
+    # Affichage d'un nuage de points permettant de comparer
+    # les valeurs prédites et les valeurs vraies
     fig = plt.figure(figsize=(2, 2))
     hue = 'Type_carburant' if carb_choisi == "Tous" else None
-
     plt.scatter(y_test, y_pred, s = 2)
-    plt.xlim(0,400)
-    plt.ylim(0,400)
+    plt.xlim(0, 400)
+    plt.ylim(0, 400)
     plt.xlabel('Observation')
     plt.ylabel('Prédiction')
-    plt.title ("Régresseur ")
+    #plt.title ("Régresseur ")
     st.pyplot(fig)
 
-    # Régression linéaire 
-    st.text ("Colonnes essayées pour la régression linéaire :")
-    st.text (data_vars)
-    st.text ("")
     st.text ("Score sur jeu d'entraînement : " + str(reg.score (X_train, y_train)))
     st.text ("Score sur jeu de tests       : " + str(reg.score (X_test,  y_test )))
-    st.text ("Suite")
 
-    st.title("Application sur un véhicule")
+    st.header("Application sur un véhicule")
     st.text("Choisissez les caratéristiques d'un véhicule et "
             "voyez l'effet sur l'émission de CO2")
 
@@ -218,4 +250,5 @@ def st_regression(df) :
     y_pred = reg.predict(X_essaye)
 
     # Affichage du taux de CO2 prédit
-    st.write(f"Émission de CO2 prédite : {y_pred[0]} g/km")
+    st.write(f"Émission de CO2 prédite : {y_pred[0]:.1f} g/km")
+ 

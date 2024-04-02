@@ -29,56 +29,38 @@ Elle affiche :
 Les types de carburant et les normes proposés sont restreintes 
 aux modalités majoritaires. Les autres ne permettent pas d'avoir
 suffisement d'observation pour faire des régressions fiables.
-
 """
 
 import streamlit         as st
 import pandas            as pd
-#import numpy             as np
+import matplotlib.pyplot as plt
 
-#import time
 import json
+import sys
 
-from sklearn.model_selection   import GridSearchCV
-
-#from sklearn.svm               import SVC
+#from sklearn.model_selection   import GridSearchCV
 from sklearn.model_selection   import train_test_split
-#from sklearn.linear_model      import LinearRegression
 from sklearn.neighbors         import KNeighborsClassifier
-from sklearn.linear_model      import LogisticRegression
-#from sklearn.feature_selection import SelectKBest
-#from sklearn.ensemble          import VotingClassifier
 from sklearn.ensemble          import HistGradientBoostingClassifier
 from sklearn.ensemble          import GradientBoostingClassifier
 from sklearn.ensemble          import BaggingClassifier
 from sklearn.ensemble          import ExtraTreesClassifier
-#from sklearn.ensemble          import ExtraTreesRegressor
-from sklearn.model_selection   import KFold
-from sklearn.model_selection   import cross_validate
-from sklearn.model_selection   import cross_val_score
-from sklearn.metrics           import mean_squared_error, f1_score, r2_score, confusion_matrix, classification_report
-#from premier_rapport           import premier_rapport
-#from CO2_fcts                  import split_ap_type
-from sklearn.feature_selection import f_regression
+from sklearn.metrics           import confusion_matrix, classification_report
 from sklearn.ensemble          import RandomForestClassifier
-from sklearn.ensemble          import RandomForestRegressor
-from sklearn.ensemble          import AdaBoostRegressor
-from sklearn.ensemble          import ExtraTreesRegressor
-from joblib import dump, load
-from CO2_fcts                  import split_ap_type, libelles_vars
+
+from CO2_fcts                  import libelles_vars
 
 def st_classification(df) :
+
     ##############################################################################
     #  Affichage de l'entête et des premières lignes                             #
     ##############################################################################
 
     st.header("Algorithmes de classification")
-    st.write("Les algorithmes entraînés nous permettent de réaliser des prédictions"
-            "de classe d'émission de CO2")
-    st.write("Ces algorithmes sont destinés à prédire des classes, ici les   "
-             " classes d'émissions de CO2")
-
-    st.write("L'entraînement des modèles est en cours.")
+    st.write("Les modèles entraînés nous permettent de réaliser des prédictions"
+            "de classe d'émission de CO2, ces classes de A à G sont "
+            "celles des étiquettes énergétiques.")
+    st.header("Choix du modèle")
 
     ##############################################################################
     #  Lecture du jeu de données et initialisations                              #
@@ -95,17 +77,15 @@ def st_classification(df) :
 
     # Suppression des modèles non émetteurs de CO2 (électrique et à H)
     dfs = df[df.Emetteur_CO2 == 1]
+
     # Sélection des colonnes pour la classification
-
-
-
     cols = [
         'Masse',
         'Empattement',
         'Larg_essieu_dir',
         'Cylindree',
         'Puiss_moteur',
-        'Nap_norme',#Cette var. doit ê dichotomisée puis suppr car elle fait planter
+        'Nap_norme',
         'Classe_CO2',
         'Carburant_Diesel',
         'Carburant_Diesel-Electrique',
@@ -117,10 +97,9 @@ def st_classification(df) :
         ]
 
        
-    #  Sélection des var., suppression de doublons, sexplicatives, sélection de la cible, création de vars.
+    #  Sélection des var., suppression de doublons, sélection de la cible, création de vars.
     dfs = df[cols]
     dfs = dfs.drop_duplicates()
-    #df = df.sample(4000) # permet de réduire le temps pendant la mmise au point
     data = dfs.drop('Classe_CO2', axis = 1)
     data = pd.concat([data, pd.get_dummies(data.Nap_norme, prefix = "Norme_")], axis = 1)
     data = data.drop("Nap_norme", axis = 1)
@@ -129,7 +108,6 @@ def st_classification(df) :
     # Préparation d'un jeu de données d'entraînement et d'un jeu de tests
     # Nous utilisons random_state = 421 pour avoir toujours le mêmes jeux
     # Nous utilisons 80% des données pour l'entraînenmt et 20% pour les test
-
 
     X_train, X_test, y_train, y_test = train_test_split (data,
                                                          target,
@@ -142,63 +120,112 @@ def st_classification(df) :
     modeles       = cla_res["Modèles"]
     modeles_noms  = [] # Liste des libellé pour le choix du modèle
 
-    ##########################################################################
-    #  Chargement des modèles précédemment entraînés                         #
-    ##########################################################################
-   
-    #st.text ("Nous avons essayé les modèles suivants : ")
-    # st.text(str(modeles)) #Pour mise au point
+    ##############################################################################
+    #  Choix du modèle de prédiction et entraînement.                            #
+    ##############################################################################
+
     for mdl in modeles :
-        nom = mdl["Libellé"]
-        #st.text(f"  - {nom:s} ;")
         modeles_noms.append(mdl["Libellé"])
-        # TODO : tenter de charger le modèle entraîné s'il a été enregistré
         mdl["Préparé"] = None
-    #st.write(modeles)#
+        pass
 
-    ##############################################################################
-    #  Création des curseurs et menus pour les choix.                            #
-    ##############################################################################
-
+    # Création du choix du modèle
     modele_choisi       = st.selectbox("Modèle de classification : ", modeles_noms)
 
-    masse_choisie       = st.slider(libelles_vars["Masse"],
+    modele = modeles[modeles_noms.index(modele_choisi)]
+    nom  = modele["Nom"]
+    prms = modele["Prm_fixes"]
+    prms.update(modele["Prm_best"])
+    if modele["Préparé"] == None :
+        if nom == "BaggingClassifier" :
+            modele["Préparé"] = BaggingClassifier(**prms)
+        if nom == "ExtraTreesClassifier" :
+            modele["Préparé"] = ExtraTreesClassifier(**prms)
+        if nom == "KNeighborsClassifier" :
+            modele["Préparé"] = KNeighborsClassifier(**prms)
+        if nom == "RandomForestClassifier" :
+            modele["Préparé"] = RandomForestClassifier(**prms)
+        if nom == "GradientBoostingClassifier" :
+            modele["Préparé"] = GradientBoostingClassifier(**prms)
+        if nom == "HistGradientBoostingClassifier" :
+            modele["Préparé"] = HistGradientBoostingClassifier(**prms)
+        modeles[modeles_noms.index(modele_choisi)] = modele
+        modele = modeles[modeles_noms.index(modele_choisi)]
+        modele["Préparé"].fit(X_train, y_train)
+    if len(prms) == 0 :
+        st.write ("Ce modèle est entraîné avec les paramètres par défaut.")
+    else :
+        st.write ("Ce mdèle est entraîné avec les paramètres suivants :")
+        for cle, val in prms.items() :
+            st.write(cle, " : ", val)
+
+    ##############################################################################
+    #  Évaluation modèle choisi : précision, rappel, f1-score et matrice de conf.#
+    ##############################################################################
+
+    # Prédiction avec les données de test
+    y_pred = modele["Préparé"].predict(X_test)
+    
+    # Calcul du rapport de classification avec précision, rappel et f1-score
+    # pour chaque classe.
+    st.subheader("Rapport de classification")
+    st.text (classification_report(y_test, y_pred,
+                                    target_names=["A", "B", "C", "D", "E", "F","G"]))
+
+    # Calcul et affichage de la matrice de confusion
+    st.subheader("Matrice de confusion")
+    matrice_confusion = pd.DataFrame(confusion_matrix(y_test, y_pred))
+    matrice_confusion.columns = ["A", "B", "C", "D", "E", "F","G"]
+    matrice_confusion.index = ["A", "B", "C", "D", "E", "F","G"]
+    st.dataframe(matrice_confusion)
+
+    ##############################################################################
+    #  Création des curseurs et menus pour les choix d'une prédiction.           #
+    ##############################################################################
+
+    col1, col2 = st.columns(2)
+
+    with col1 :
+        norme_choisie       =  st.selectbox('Choix de la norme :', normes_proposees)
+
+        masse_choisie       = st.slider(libelles_vars["Masse"],
                                     min_value = int(df['Masse'].min()),
                                     max_value = int(df['Masse'].max()),
                                     value     = int(df['Masse'].median()),
                                     step=10)
-    empattement_choisi  = st.slider(libelles_vars["Empattement"],
-                                    min_value = int(df['Empattement'].min()),
-                                    max_value = int(df['Empattement'].max()),
-                                    value     = int(df['Empattement'].median()),
-                                    step      = 10)
-
-    larg_essieu_choisie = st.slider(libelles_vars["Larg_essieu_dir"],
-                                    min_value = int(df['Larg_essieu_dir'].min()),
-                                    max_value = int(df['Larg_essieu_dir'].max()),
-                                    value     = int(df['Larg_essieu_dir'].median()),
-                                    step      = 10)
-
-    puissance_choisie   = st.slider(libelles_vars["Puiss_moteur"],
+        puissance_choisie   = st.slider(libelles_vars["Puiss_moteur"],
                                     min_value = int(df['Puiss_moteur'].min()),
                                     max_value = int(df['Puiss_moteur'].max()),
                                     value     = int(df['Puiss_moteur'].median()),
                                     step      = 10)
 
-    cylindree_choisie   = st.slider(libelles_vars["Cylindree"],
+        cylindree_choisie   = st.slider(libelles_vars["Cylindree"],
                                     min_value = int(df['Cylindree'].min()),
                                     max_value = int(df['Cylindree'].max()),
                                     value     = int(df['Cylindree'].median()),
                                     step      = 10)
 
-    norme_choisie       =  st.selectbox('Choix de la norme :', normes_proposees)
+    with col2 :
+        type_carb_choisi    =  st.selectbox('Type d\'énergie :', df.Type_carburant.unique())
 
-    type_carb_choisi    =  st.selectbox('Type d\'énergie :', df.Type_carburant.unique())
+        empattement_choisi  = st.slider(libelles_vars["Empattement"],
+                                    min_value = int(df['Empattement'].min()),
+                                    max_value = int(df['Empattement'].max()),
+                                    value     = int(df['Empattement'].median()),
+                                    step      = 10)
+
+        larg_essieu_choisie = st.slider(libelles_vars["Larg_essieu_dir"],
+                                    min_value = int(df['Larg_essieu_dir'].min()),
+                                    max_value = int(df['Larg_essieu_dir'].max()),
+                                    value     = int(df['Larg_essieu_dir'].median()),
+                                    step      = 10)
 
     ##############################################################################
     #  Prédiction et affichage du résultat                                       #
     ##############################################################################
 
+    # Constitution d'un jeu d'essai pour afficher une prédiction avec les valeurs
+    # choisies par l'utilisateur; ces valeurs sont stockées dans un DataFrame.
     data_essai = pd.DataFrame({
             'Masse'                        : [masse_choisie],
             'Empattement'                  : [empattement_choisi],
@@ -219,41 +246,6 @@ def st_classification(df) :
             'Norme__KS07/46'               : [1 if norme_choisie    == "KS07/46" else 0],
         })
 
-    #st.write ("Num. du mdle : " + str(modeles_noms.index(modele_choisi)))
-
-    modele = modeles[modeles_noms.index(modele_choisi)]
-    #st.write(modele)
-    nom  = modele["Nom"]
-    prms = modele["Prm_fixes"]
-    prms.update(modele["Prm_best"])
-    #st.write(f"{nom:s} {str(prms):s}")
-    #st.write(modele["Prm_best"])
-    #st.write ("----->" + str(modele["Nom"]))
-    #st.write ("----->" + str(modele["Préparé"]))
-    if modele["Préparé"] == None :
-        if nom == "BaggingClassifier" :
-            modele["Préparé"] = BaggingClassifier(**prms)
-        if nom == "ExtraTreesClassifier" :
-            modele["Préparé"] = ExtraTreesClassifier(**prms)
-        if nom == "KNeighborsClassifier" :
-            modele["Préparé"] = KNeighborsClassifier(**prms)
-        if nom == "RandomForestClassifier" :
-            modele["Préparé"] = RandomForestClassifier(**prms)
-        if nom == "GradientBoostingClassifier" :
-            modele["Préparé"] = GradientBoostingClassifier(**prms)
-        if nom == "HistGradientBoostingClassifier" :
-            modele["Préparé"] = HistGradientBoostingClassifier(**prms)
-        modeles[modeles_noms.index(modele_choisi)] = modele
-        #st.write ("----->" + str(modele["Nom"]))
-        #st.write ("----->" + str(modele["Préparé"]))
-        #st.write ("Entraînement")
-        modele["Préparé"].fit(X_train, y_train)
-        #st.write("Entraîné")
-    else :
-        #st.write("Déjà préparé")
-        pass
-
-    #st.write ("Classifieur préparé :      : " +  str(modele["Préparé"]))
+    # Calcul de la valeur prédite avec les valeurs choisies et affichage 
     y_essai = modele["Préparé"].predict(data_essai)
-    res = y_essai
-    st.write(f"Classe prédite : {res}")
+    st.write(f"Classe prédite : {y_essai}")
